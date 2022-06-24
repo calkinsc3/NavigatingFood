@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FA331D72286564DC00125729 /* Desserts.json in Resources */ = {isa = PBXBuildFile; fileRef = FA6BF28F2864D9A000050D5E /* Desserts.json */; };
+		FA331D73286564DC00125729 /* Meals.json in Resources */ = {isa = PBXBuildFile; fileRef = FA6BF28E2864D9A000050D5E /* Meals.json */; };
 		FA6BF2552864D80A00050D5E /* NavigatingFoodApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6BF2542864D80A00050D5E /* NavigatingFoodApp.swift */; };
 		FA6BF2572864D80A00050D5E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6BF2562864D80A00050D5E /* ContentView.swift */; };
 		FA6BF2592864D80B00050D5E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA6BF2582864D80B00050D5E /* Assets.xcassets */; };
@@ -323,6 +325,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA331D72286564DC00125729 /* Desserts.json in Resources */,
+				FA331D73286564DC00125729 /* Meals.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -130,7 +130,6 @@ final class NavigatingFoodTests: XCTestCase {
     // MARK: - Helper Functions
     private func getMockData(forResource: String) -> Data? {
         
-        //This is included in they myamfam target becasue it will be used the app.
         let currentBundle = Bundle(for: type(of: self))
         if let pathForRecommendationMock = currentBundle.url(forResource: forResource, withExtension: "json") {
             do {
