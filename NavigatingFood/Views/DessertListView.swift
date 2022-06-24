@@ -11,7 +11,7 @@ struct DessertListView: View {
     
     @Environment(\.presentationMode) var prsentationMode
     
-    var givenDesserts: [Meal] = Desserts.desertPlaceHolder.meals
+    var givenDesserts: [Meal] = Recipes.recipesPlaceholder.meals
     
     var body: some View {
         NavigationView {

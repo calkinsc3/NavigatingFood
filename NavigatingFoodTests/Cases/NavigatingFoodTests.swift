@@ -9,7 +9,7 @@ import XCTest
 @testable import NavigatingFood
 
 final class NavigatingFoodTests: XCTestCase {
-
+    
     let jsonDecoder = JSONDecoder()
     
     override func setUpWithError() throws {
@@ -29,7 +29,7 @@ final class NavigatingFoodTests: XCTestCase {
         }
         //attempt to decode the data buffer into structured data
         do {
-            let desertModel = try jsonDecoder.decode(Desserts.self, from: desertModelData)
+            let desertModel = try jsonDecoder.decode(Recipes.self, from: desertModelData)
             XCTAssertTrue(desertModel.meals.count == 64, "DesertModel meals count should be 64")
             
         } catch {
@@ -89,21 +89,21 @@ final class NavigatingFoodTests: XCTestCase {
             // MARK: Test Ingredients
             if let givenMeal = mealModel.meals.first {
                 let filteredIngredients = givenMeal.filter({$0.key.contains("strIngredient")})
-                                            .sorted(by: {$0.key < $1.key})
-                                            .compactMap({$0.value}) //remove nil values
-                                            .filter({$0 != ""}) // remove empty strings
+                    .sorted(by: {$0.key < $1.key})
+                    .compactMap({$0.value}) //remove nil values
+                    .filter({$0 != ""}) // remove empty strings
                 let filteredMesurements = givenMeal.filter({$0.key.contains("strMeasure")})
-                                            .sorted(by: {$0.key < $1.key})
-                                            .compactMap({$0.value})
-                                            .filter({$0 != ""})
-                                            .filter({$0 != " "})
+                    .sorted(by: {$0.key < $1.key})
+                    .compactMap({$0.value})
+                    .filter({$0 != ""})
+                    .filter({$0 != " "})
                 
                 XCTAssertTrue(filteredIngredients.count == 9, "There should be 9 ingredients after filtering garbage.")
                 XCTAssertTrue(filteredMesurements.count == 9, "There should be 9 measurements after filtering garbage")
                 
                 //zip arrays into a dictionary
                 let ingredientDict = Dictionary(uniqueKeysWithValues: zip(filteredIngredients, filteredMesurements))
-
+                
                 //move dict into data structure
                 let completeInstructions = ingredientDict.map({MealIngredients(name: $0.key, quantity: $0.value)})
                 
@@ -124,8 +124,28 @@ final class NavigatingFoodTests: XCTestCase {
         } catch {
             XCTFail("Failed to decode Meal Detail data: \(error)")
         }
+    }
+    
+    func testFoodCatModel() {
+        
+        // Test the meal detail data structure
+        guard let foodCatsData = getMockData(forResource: "FoodCats") else {
+            XCTFail("Cannot find Meals.json in the file bundle.")
+            return
+        }
+        
+        do {
+            let foodCats = try jsonDecoder.decode(FoodCategoryModel.self, from: foodCatsData)
+            
+            XCTAssertTrue(foodCats.categories.count == 14, "The ingredients count should be 53")
+            
+        } catch {
+            XCTFail("Failed to decode Food Cats data: \(error)")
+        }
         
     }
+    
+    
     
     // MARK: - Helper Functions
     private func getMockData(forResource: String) -> Data? {

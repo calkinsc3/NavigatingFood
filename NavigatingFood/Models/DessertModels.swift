@@ -9,12 +9,12 @@ import Foundation
 
 
 // MARK: - Deserts
-struct Desserts: Decodable, Equatable, Hashable {
+struct Recipes: Decodable, Equatable, Hashable {
     let meals: [Meal]
     
     //Only for use in prototypeing and SwiftUI Previews
 #if DEBUG
-    static let desertPlaceHolder = Self(meals: [Meal.mealPlaceholder1,
+    static let recipesPlaceholder = Self(meals: [Meal.mealPlaceholder1,
                                                 Meal.mealPlaceholder2,
                                                 Meal.mealPlaceholder3,
                                                 Meal.mealPlaceholder4])
@@ -157,7 +157,7 @@ struct MealDetail: Decodable {
 
 // MARK: Ingredient Struct
 struct MealIngredients: CustomStringConvertible, Hashable, Equatable, Identifiable {
-    var name: String
+    let name: String
     var quantity: String
     
     var id: String { UUID().uuidString }

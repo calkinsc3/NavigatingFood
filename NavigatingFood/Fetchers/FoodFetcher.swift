@@ -1,30 +1,47 @@
 //
-//  DesertFetcher.swift
-//  FetchDesertReward
+//  FoodFetcher.swift
+//  NavigatingFood
 //
-//  Created by Bill Calkins on 6/17/22.
+//  Created by Bill Calkins on 6/24/22.
 //
 
 import Foundation
-import UIKit
 
-
-final class DessertFetcher {
+final class FoodFetcher {
     
     private var session: URLSession
     
     init() {
-        
         self.session = URLSession(configuration: .default)
-        
     }
     
     // MARK: - Get Deserts from API
-    func fetchDeserts() async throws -> Recipes {
+    func fetchCategory() async throws -> FoodCategoryModel {
         
         //assemble URL
-        guard let url = self.makeComponentsForDesert().url else {
-            throw FoodErrors.urlError(description: "Could not assemble URL for Deserts")
+        guard let url = self.makeComponentsForCategories().url else {
+            throw FoodErrors.urlError(description: "Could not assemble URL for Categories")
+        }
+        
+        let (data, response) = try await self.session.data(from: url)
+        
+        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+            throw FoodErrors.apiError(description: "Desert returned a non-200")
+        }
+        
+        do {
+            return try JSONDecoder().decode(FoodCategoryModel.self, from: data)
+        } catch let error {
+            throw FoodErrors.decoding(description: "Error decoding dessert return: \(error)")
+        }
+    }
+    
+    // MARK: - Get Deserts from API
+    func fetchRecipes(forGivenCategory categoryID: String) async throws -> Recipes {
+        
+        //assemble URL
+        guard let url = self.makeComponentsForRecipe(categoryID: categoryID).url else {
+            throw FoodErrors.urlError(description: "Could not assemble URL for Categories")
         }
         
         let (data, response) = try await self.session.data(from: url)
@@ -35,6 +52,7 @@ final class DessertFetcher {
         
         do {
             return try JSONDecoder().decode(Recipes.self, from: data)
+            
         } catch let error {
             throw FoodErrors.decoding(description: "Error decoding dessert return: \(error)")
         }
@@ -42,7 +60,7 @@ final class DessertFetcher {
     
 
     // MARK: - Get Desert Details from API
-    func fetchDesertDetails(withMealId mealId: String) async throws -> MealDetail {
+    func fetchFoodDetails(withMealId mealId: String) async throws -> MealDetail {
         
         //assemble URL
         guard let url = self.makeComponentsForDesertDetail(mealID: mealId).url else {
@@ -63,38 +81,32 @@ final class DessertFetcher {
         
     }
     
-    // MARK: Gather Desert Image
-    func getDesertImage(imageURL url: URL) async throws -> UIImage {
+}
+
+// MARK: - Endpoint Builder
+private extension FoodFetcher {
+    
+    func makeComponentsForCategories() -> URLComponents {
         
-        let (data, response) = try await self.session.data(from: url)
+        var components = URLComponents()
         
-        guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
-            throw FoodErrors.apiError(description: "Dessert Image URL retured a non-200 value")
-        }
+        components.scheme = MEAL_API.schema
+        components.host = MEAL_API.host
+        components.path = MEAL_API.foodCategoriesPath
         
-        guard let givenImage = UIImage(data: data) else {
-            throw FoodErrors.apiError(description: "Data from Dessert Image could not be converted to UIImage")
-        }
+        return components
         
-        return givenImage
         
     }
     
-}
-
-
-
-// MARK: - Endpoint Builder
-private extension DessertFetcher {
-    
-    func makeComponentsForDesert() -> URLComponents {
+    func makeComponentsForRecipe(categoryID id: String) -> URLComponents {
         
         var components = URLComponents()
         
         components.scheme = MEAL_API.schema
         components.host = MEAL_API.host
         components.path = MEAL_API.desertPath
-        components.queryItems = [URLQueryItem(name: "c", value: "Dessert")] //?c=Dessert
+        components.queryItems = [URLQueryItem(name: "c", value: id)] //?c=Dessert
         
         return components
     
@@ -113,21 +125,3 @@ private extension DessertFetcher {
         
     }
 }
-
-// MARK: - Endpoint Comps
-struct MEAL_API {
-    static let schema = "https"
-    static let host = "www.themealdb.com"
-    #if DEBUG
-    static let version = "v1/1"
-    #else
-    static let version = "v2/9973533"
-    #endif
-    static let basepath = "api/json/\(version)"
-    
-    static let desertPath = "/\(basepath)/filter.php"
-    static let desertDetailPath = "/\(basepath)/lookup.php"
-    static let foodCategoriesPath = "/\(basepath)/categories.php"
-    
-}
-

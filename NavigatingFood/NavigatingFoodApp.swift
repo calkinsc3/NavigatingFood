@@ -12,7 +12,8 @@ struct NavigatingFoodApp: App {
     var body: some Scene {
         WindowGroup {
             //ContentView()
-            DessertListView()
+            //DessertListView()
+            FoodCategoriesView()
         }
     }
 }

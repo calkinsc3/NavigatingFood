@@ -8,7 +8,7 @@
 import Foundation
 
 
-enum DesertFetcherErrors: Error {
+enum FoodErrors: Error {
 case network(description: String)
 case decoding(description: String)
 case urlError(description: String)
