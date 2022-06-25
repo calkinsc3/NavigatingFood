@@ -18,6 +18,9 @@ final class FoodCategoryViewModel: ObservableObject {
         let foodFetcher = FoodFetcher()
         do {
             self.foodCategories = try await foodFetcher.fetchCategory()
+            if let firstCategory = self.foodCategories.categories.first {
+                await self.getFoodRecipes(forCategory: firstCategory.strCategory)
+            }
         } catch {
             Log.networkLogger.error("Unable to retrieve categories from API")
         }

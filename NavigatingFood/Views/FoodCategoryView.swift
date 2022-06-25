@@ -15,14 +15,20 @@ struct FoodCategoriesView: View {
     
     var body: some View {
         NavigationSplitView {
-            List(self.foodCategoryViewModel.foodCategories.sortedCategories, selection: $selectedCategory){category in
+            List(self.foodCategoryViewModel.foodCategories.sortedCategories, selection: $selectedCategory) {category in
                 NavigationLink(category.strCategory, value: category)
             }
             .navigationTitle("Categories")
         } content: {
-            Text("Content")
+            List(self.foodCategoryViewModel.foodRecipes.meals, selection: $selectedReceipe) {recipe in
+                NavigationLink(recipe.strMeal, value: recipe)
+            }
+              
+            
         } detail: {
-            Text("Detail")
+            if let givenSelectedCategory = self.selectedCategory {
+                FoodCategoryDetailView(givenCategory: givenSelectedCategory)
+            }
         }
         .task {
             await self.foodCategoryViewModel.getFoodCategories()
@@ -30,6 +36,7 @@ struct FoodCategoriesView: View {
     }
 }
 
+// MARK: - FoodCategoryCellView
 struct FoodCategoryCellView: View {
     
     let givenCategory: Category
@@ -40,6 +47,7 @@ struct FoodCategoryCellView: View {
     }
 }
 
+// MARK: - FoodCategoryDetailView
 struct FoodCategoryDetailView: View {
     
     let givenCategory: Category
@@ -58,8 +66,12 @@ struct FoodCategoryDetailView: View {
             Text(givenCategory.strCategoryDescription)
         }
     }
-    
 }
+
+// MARK: - Recipes
+
+
+
 
 // MARK: - Previews
 struct FoodCategoryView_Previews: PreviewProvider {
