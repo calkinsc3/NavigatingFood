@@ -11,7 +11,7 @@ import Foundation
 import Foundation
 
 // MARK: - FoodCategoryModel
-struct FoodCategoryModel: Codable {
+struct FoodCategoryModel: Decodable {
     let categories: [Category]
     var sortedCategories: [Category] {
         categories.sorted(by: {$0.strCategory < $1.strCategory})
@@ -23,10 +23,12 @@ struct FoodCategoryModel: Codable {
 }
 
 // MARK: - Category
-struct Category: Codable, Identifiable, Hashable, Equatable {
+struct Category: Decodable, Identifiable, Hashable, Equatable {
     let idCategory, strCategory: String
     let strCategoryThumb: String
     let strCategoryDescription: String
+    
+    var meals: [Meal] = []
     
     var thumbnailURL: URL? {
         URL(string: strCategoryThumb)

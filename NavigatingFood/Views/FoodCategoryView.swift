@@ -23,8 +23,11 @@ struct FoodCategoriesView: View {
             List(self.foodCategoryViewModel.foodRecipes.meals, selection: $selectedReceipe) {recipe in
                 NavigationLink(recipe.strMeal, value: recipe)
             }
-              
-            
+            .task {
+                if let givenCategoryID = selectedCategory?.idCategory {
+                    await self.foodCategoryViewModel.getFoodRecipes(forCategory: givenCategoryID)
+                }
+            }
         } detail: {
             if let givenSelectedCategory = self.selectedCategory {
                 FoodCategoryDetailView(givenCategory: givenSelectedCategory)

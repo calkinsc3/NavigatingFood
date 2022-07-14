@@ -30,7 +30,10 @@ final class FoodFetcher {
         }
         
         do {
-            return try JSONDecoder().decode(FoodCategoryModel.self, from: data)
+            let foodCategories = try JSONDecoder().decode(FoodCategoryModel.self, from: data)
+            // TODO: create an asyncSequence
+            return foodCategories
+            
         } catch let error {
             throw FoodErrors.decoding(description: "Error decoding dessert return: \(error)")
         }

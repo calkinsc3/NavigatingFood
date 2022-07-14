@@ -27,6 +27,7 @@ struct Meal: Decodable, Hashable, Equatable, Identifiable {
     let strMealThumb: String
     let idMeal: String
     
+    
     var id: String {
         self.idMeal
     }
