@@ -67,7 +67,7 @@ final class NavigatingFoodTests: XCTestCase {
         
         do {
             let mealModel = try jsonDecoder.decode(MealDetail.self, from: mealDetails)
-            if let ingredientsCount = mealModel.meals.first?.count {
+            if let ingredientsCount = mealModel.details.first?.count {
                 XCTAssertTrue(ingredientsCount == 53, "The ingredients count should be 53")
             }
             
@@ -87,7 +87,7 @@ final class NavigatingFoodTests: XCTestCase {
             }
             
             // MARK: Test Ingredients
-            if let givenMeal = mealModel.meals.first {
+            if let givenMeal = mealModel.details.first {
                 let filteredIngredients = givenMeal.filter({$0.key.contains("strIngredient")})
                     .sorted(by: {$0.key < $1.key})
                     .compactMap({$0.value}) //remove nil values

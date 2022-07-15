@@ -32,6 +32,12 @@ final class FoodFetcher {
         do {
             let foodCategories = try JSONDecoder().decode(FoodCategoryModel.self, from: data)
             // TODO: create an asyncSequence
+//            for try await category in foodCategories.categories {
+//                let meals = self.fetchRecipes(forGivenCategory: category)
+//                for try await meal in meals {
+//                    let mealDetails = self.fetchFoodDetails(withMealId: meal.id)
+//                }
+//            }
             return foodCategories
             
         } catch let error {

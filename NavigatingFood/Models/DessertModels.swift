@@ -4,6 +4,22 @@
 //
 //  Created by Bill Calkins on 6/17/22.
 //
+/*
+ ┌─────────────┐
+ │  Category   │
+ │             │
+ └─────────────┘
+        │
+        │   ┌─────────────┐
+        │   │    Meals    │
+        └──▶│             │
+            └─────────────┘
+                   │
+                   │   ┌─────────────┐
+                   │   │ MealDetails │
+                   └──▶│             │
+                       └─────────────┘
+ */
 
 import Foundation
 
@@ -27,6 +43,7 @@ struct Meal: Decodable, Hashable, Equatable, Identifiable {
     let strMealThumb: String
     let idMeal: String
     
+    let mealDetail: MealDetail?
     
     var id: String {
         self.idMeal
@@ -40,24 +57,44 @@ struct Meal: Decodable, Hashable, Equatable, Identifiable {
 #if DEBUG
     static let mealPlaceholder1 = Self(strMeal: "Apam balid",
                                        strMealThumb: "https://www.themealdb.com/images/media/meals/adxcbq1619787919.jpg",
-                                       idMeal: "53049")
+                                       idMeal: "53049", mealDetail: MealDetail.mealDetailPlaceholder1)
     static let mealPlaceholder2 = Self(strMeal: "Apple & Blackberry Crumble",
                                        strMealThumb: "https://www.themealdb.com/images/media/meals/xvsurr1511719182.jpg",
-                                       idMeal: "52893")
+                                       idMeal: "52893", mealDetail: MealDetail.mealDetailPlaceholder2)
     static let mealPlaceholder3 = Self(strMeal: "Apple Frangipan Tart",
                                        strMealThumb: "https://www.themealdb.com/images/media/meals/wxywrq1468235067.jpg",
-                                       idMeal: "52768")
+                                       idMeal: "52768", mealDetail: MealDetail.mealDetailPlaceholder3)
     static let mealPlaceholder4 = Self(strMeal: "Bakewell tart",
                                        strMealThumb: "https://www.themealdb.com/images/media/meals/wyrqqq1468233628.jpg",
-                                       idMeal: "52767")
+                                       idMeal: "52767", mealDetail: MealDetail.mealDetailPlaceholder2)
 #endif
+}
+
+extension Meal {
+    
+    init(givenMeal: Meal)  {
+        strMeal = givenMeal.strMeal
+        strMealThumb = givenMeal.strMealThumb
+        idMeal = givenMeal.idMeal
+        mealDetail = MealDetail.mealDetailPlaceholder1
+    }
+    
 }
 
 
 // MARK: - MealDetail
-struct MealDetail: Decodable {
+struct MealDetail: Decodable, Hashable, Equatable {
     
     let meals: [[String: String?]]
+    
+    
+    #if DEBUG
+    static let mealDetailPlaceholder1 = Self(meals: [["idMeal": "52878", "strMeal" : "Beef and Oyster pie", "strArea" : "British"]])
+    static let mealDetailPlaceholder2 = Self(meals: [["idMeal": "52904", "strMeal" : "Beef Bourguignon", "strArea" : "French"]])
+    static let mealDetailPlaceholder3 = Self(meals: [["idMeal": "52952", "strMeal" : "Beef Lo Mein", "strArea" : "Chinese"]])
+    
+    
+    #endif
     
     // MARK: Name
     var mealName: String? {

@@ -4,6 +4,23 @@
 //
 //  Created by Bill Calkins on 6/24/22.
 //
+/*
+ 
+ ┌─────────────┐
+ │  Category   │
+ │             │
+ └─────────────┘
+        │
+        │   ┌─────────────┐
+        │   │    Meals    │
+        └──▶│             │
+            └─────────────┘
+                   │
+                   │   ┌─────────────┐
+                   │   │ MealDetails │
+                   └──▶│             │
+                       └─────────────┘
+ */
 
 import Foundation
 
@@ -28,7 +45,7 @@ struct Category: Decodable, Identifiable, Hashable, Equatable {
     let strCategoryThumb: String
     let strCategoryDescription: String
     
-    var meals: [Meal] = []
+    var meals: [Meal]?
     
     var thumbnailURL: URL? {
         URL(string: strCategoryThumb)

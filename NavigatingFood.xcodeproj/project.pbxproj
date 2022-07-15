@@ -28,6 +28,7 @@
 		FA6BF28B2864D93100050D5E /* DessertModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6BF28A2864D93100050D5E /* DessertModels.swift */; };
 		FA6BF2932864DA0500050D5E /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6BF2912864DA0500050D5E /* Errors.swift */; };
 		FA6BF2942864DA0500050D5E /* Logs.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6BF2922864DA0500050D5E /* Logs.swift */; };
+		FAF92DBA288193D200A11E1D /* MealIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF92DB9288193D200A11E1D /* MealIterator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,7 @@
 		FA6BF28F2864D9A000050D5E /* Desserts.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Desserts.json; sourceTree = "<group>"; };
 		FA6BF2912864DA0500050D5E /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		FA6BF2922864DA0500050D5E /* Logs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logs.swift; sourceTree = "<group>"; };
+		FAF92DB9288193D200A11E1D /* MealIterator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealIterator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,6 +198,7 @@
 			children = (
 				FA6BF28A2864D93100050D5E /* DessertModels.swift */,
 				FA1652302865F181007795F0 /* FoodCategoryModel.swift */,
+				FAF92DB9288193D200A11E1D /* MealIterator.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -368,6 +371,7 @@
 				FA6BF2842864D88C00050D5E /* DessertDetailsViewModel.swift in Sources */,
 				FA6BF2942864DA0500050D5E /* Logs.swift in Sources */,
 				FA6BF2932864DA0500050D5E /* Errors.swift in Sources */,
+				FAF92DBA288193D200A11E1D /* MealIterator.swift in Sources */,
 				FA6BF2822864D87900050D5E /* DessertDetailView.swift in Sources */,
 				FA16523528662AE0007795F0 /* FoodCategoryViewModel.swift in Sources */,
 				FA1652312865F181007795F0 /* FoodCategoryModel.swift in Sources */,
