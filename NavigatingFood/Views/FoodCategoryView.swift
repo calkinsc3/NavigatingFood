@@ -16,21 +16,18 @@ struct FoodCategoriesView: View {
     var body: some View {
         NavigationSplitView {
             List(self.foodCategoryViewModel.foodCategories.sortedCategories, selection: $selectedCategory) {category in
-                NavigationLink(category.strCategory, value: category)
-            }
-            .navigationTitle("Categories")
-        } content: {
-            List(self.foodCategoryViewModel.foodRecipes.meals, selection: $selectedReceipe) {recipe in
-                NavigationLink(recipe.strMeal, value: recipe)
-            }
-            .task {
-                if let givenCategoryID = selectedCategory?.idCategory {
-                    await self.foodCategoryViewModel.getFoodRecipes(forCategory: givenCategoryID)
+                NavigationLink(value: category) {
+                    FoodCategoryCellView(givenCategory: category)
                 }
             }
+            .navigationTitle("Categories")
         } detail: {
-            if let givenSelectedCategory = self.selectedCategory {
-                FoodCategoryDetailView(givenCategory: givenSelectedCategory)
+            ZStack { //Fixes Beta Bug
+                if let givenSelectedCategory = self.selectedCategory {
+                    FoodCategoryDetailView(givenCategory: givenSelectedCategory)
+                } else {
+                    Text("Select a Category")
+                }
             }
         }
         .task {
@@ -68,6 +65,7 @@ struct FoodCategoryDetailView: View {
                 .font(.title)
             Text(givenCategory.strCategoryDescription)
         }
+        .padding()
     }
 }
 
