@@ -11,7 +11,7 @@ struct FoodCategoriesView: View {
     @ObservedObject var foodCategoryViewModel = FoodCategoryViewModel()
     
     @State private var selectedCategory: Category?
-    @State private var selectedReceipe: Meal?
+    @State private var selectedRecipe: Meal?
     
     var body: some View {
         NavigationSplitView {
@@ -21,12 +21,23 @@ struct FoodCategoriesView: View {
                 }
             }
             .navigationTitle("Categories")
-        } detail: {
+            .task {
+                if let givenCategory = self.selectedCategory {
+                    await foodCategoryViewModel.getFoodRecipes(forCategory: givenCategory.id)
+                }
+            }
+        } content: {
             ZStack { //Fixes Beta Bug
-                if let givenSelectedCategory = self.selectedCategory {
-                    FoodCategoryDetailView(givenCategory: givenSelectedCategory)
-                } else {
-                    Text("Select a Category")
+                List(self.foodCategoryViewModel.foodRecipes.meals, selection: $selectedRecipe) { meal in
+                    NavigationLink(value: meal) {
+                        FoodRecipeCellView(recipe: meal)
+                    }
+                }
+            }
+        } detail: {
+            if let givenMeal = self.selectedRecipe {
+                ZStack {
+                    DessertDetailView(dessert: givenMeal)
                 }
             }
         }
@@ -53,16 +64,16 @@ struct FoodCategoryDetailView: View {
     let givenCategory: Category
     
     var body: some View {
-        VStack (spacing: 20) {
+        HStack (spacing: 20) {
             AsyncImage(url: givenCategory.thumbnailURL) { image in
                 image
                     .resizable()
-                    .frame(width: 200, height: 200)
+                    .frame(width: 50.0, height: 50.0)
             } placeholder: {
                 ProgressView()
             }
             Text(givenCategory.strCategory)
-                .font(.title)
+                .font(.body)
             Text(givenCategory.strCategoryDescription)
         }
         .padding()
@@ -70,6 +81,25 @@ struct FoodCategoryDetailView: View {
 }
 
 // MARK: - Recipes
+struct FoodRecipeCellView: View {
+    
+    let recipe: Meal
+    
+    var body: some View {
+        HStack(alignment: .center) {
+            AsyncImage(url: recipe.thumbNailURL) { image in
+                image
+                    .resizable()
+                    .frame(width: 50.0, height: 50.0)
+            } placeholder: {
+                ProgressView()
+            }
+            Text(recipe.strMeal)
+                .font(.body)
+            
+        }
+    }
+}
 
 
 
