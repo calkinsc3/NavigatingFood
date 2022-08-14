@@ -27,11 +27,9 @@ struct FoodCategoriesView: View {
                 }
             }
         } content: {
-            ZStack { //Fixes Beta Bug
-                List(self.foodCategoryViewModel.foodRecipes.meals, selection: $selectedRecipe) { meal in
-                    NavigationLink(value: meal) {
-                        FoodRecipeCellView(recipe: meal)
-                    }
+            List(self.foodCategoryViewModel.foodRecipes.meals, selection: $selectedRecipe) { meal in
+                NavigationLink(value: meal) {
+                    FoodRecipeCellView(recipe: meal)
                 }
             }
         } detail: {
